@@ -13,5 +13,13 @@
     "turbo": "latest"
   },
   "packageManager": "pnpm@7.15.0",
-  "name": "my-turborepo"
+  "name": "my-turborepo",
+  "dependencies": {
+    "@chakra-ui/next-js": "^2.1.2",
+    "@chakra-ui/react": "^2.5.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "framer-motion": "^10.12.4"
+  }
 }

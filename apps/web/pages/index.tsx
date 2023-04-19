@@ -1,8 +1,9 @@
+import { Heading } from '@chakra-ui/react';
+
 export default function Home() {
   return (
     <div>
-      <h1>Auth testing</h1>
-      <div>hello</div>
+      <Heading>Index Page</Heading>
     </div>
   );
 }
