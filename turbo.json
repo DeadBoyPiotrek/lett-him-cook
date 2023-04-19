@@ -5,7 +5,7 @@
   "pipeline": {
     "build": {
       "outputs": [".next/**", "!.next/cache/**"],
-      "env": ["GITHUB_ID", "GITHUB_SECRET"]
+      "env": ["GITHUB_ID", "GITHUB_SECRET", "NODE_ENV"]
     },
     "lint": {},
     "dev": {
