@@ -1,9 +1,26 @@
-import { Heading } from '@chakra-ui/react';
+import { Button, Flex, Heading } from '@chakra-ui/react';
+
+const addTextHandler = async () => {
+  const response = await fetch('/api/text', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      text: 'Hello world',
+    }),
+  });
+
+  const data = await response.json();
+  console.log(data);
+};
 
 export default function Home() {
   return (
-    <div>
+    <Flex>
       <Heading>Index Page</Heading>
-    </div>
+
+      <Button onClick={addTextHandler}>Send text to database</Button>
+    </Flex>
   );
 }

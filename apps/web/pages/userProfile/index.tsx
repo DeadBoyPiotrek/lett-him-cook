@@ -1,5 +1,7 @@
-import { useSession, signIn, signOut } from 'next-auth/react';
-
+import type { GetServerSidePropsContext } from 'next';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../../pages/api/auth/[...nextauth]';
 export default function Component() {
   const { data: session } = useSession();
   if (session) {
@@ -17,3 +19,15 @@ export default function Component() {
     </>
   );
 }
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  return {
+    props: {
+      session,
+    },
+  };
+};
