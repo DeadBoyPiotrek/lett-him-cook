@@ -16,8 +16,16 @@ export const AddTopicForm = () => {
   } = useForm();
 
   const onSubmit = handleSubmit(async data => {
-    console.log(data);
-    reset();
+    // call api to create topic
+    fetch('/api/addTopic', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    // reset();
   });
 
   return (

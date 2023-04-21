@@ -4,9 +4,9 @@ import { TopicBox } from 'components/topicBox/topicBox';
 
 export const AllTopics = ({ topics }: { topics: Topic[] }) => {
   return (
-    <Flex p={20} gap={5}>
+    <Flex p={20} gap={5} flexWrap={'wrap'}>
       {topics.map(topic => (
-        <TopicBox topic={topic} />
+        <TopicBox key={topic.id} topic={topic} />
       ))}
     </Flex>
   );
