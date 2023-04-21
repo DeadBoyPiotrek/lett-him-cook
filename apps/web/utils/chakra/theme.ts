@@ -10,9 +10,7 @@ const config: ThemeConfig = {
 };
 
 // 3. extend the theme
-const theme = extendTheme({
+export const customTheme = extendTheme({
   config,
-  styles: { global: { body: { bg: 'gray.900', color: 'white' } } },
+  // styles: { global: { body: { bg: 'gray.900', color: 'white' } } },
 });
-
-export default theme;
