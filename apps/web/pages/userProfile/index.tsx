@@ -2,7 +2,7 @@ import type { GetServerSidePropsContext } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../pages/api/auth/[...nextauth]';
-export default function Component() {
+export default function Profile() {
   const { data: session } = useSession();
   if (session) {
     return (
