@@ -17,21 +17,18 @@ const deleteTopic = async (id: number) => {
 
 export const TopicBox = ({ topic }: { topic: Topic }) => {
   return (
-    <Link
-      _hover={{ textDecoration: 'none' }}
-      href={`/topics/${titleToSlug(topic.title)}`}
-    >
-      <Box bg="red.400" borderRadius="10px" border="1px solid black" p={5}>
-        <Heading>{topic.title}</Heading>
+    <Box bg="red.400" borderRadius="10px" border="1px solid black" p={5}>
+      <Link _hover={{ textDecoration: 'none' }} href={`/topic/${topic.slug}`}>
         <p>{dateToLongFormat(topic.createdAt)}</p>
-        <Button
-          onClick={() => {
-            deleteTopic(topic.id);
-          }}
-        >
-          💀
-        </Button>
-      </Box>
-    </Link>
+        <Heading>{topic.title}</Heading>
+      </Link>
+      <Button
+        onClick={() => {
+          deleteTopic(topic.id);
+        }}
+      >
+        💀
+      </Button>
+    </Box>
   );
 };

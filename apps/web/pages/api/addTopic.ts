@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './auth/[...nextauth]';
 import { prisma } from '../../server/db/client';
+import { titleToSlug } from 'utils/strings/titleToSlug';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);
@@ -15,6 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const topic = await prisma.topic.create({
     data: {
       title: name,
+      slug: titleToSlug(name),
       user: {
         connect: {
           email: session?.user?.email,

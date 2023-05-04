@@ -1,11 +1,12 @@
 import { prisma } from '@client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../web/pages/api/auth/[...nextauth]';
-import type { GetServerSidePropsContext } from 'next';
+
 import type { Topic } from '@prisma/client';
 import { AllTopics } from '../components/allTopics/allTopics';
 import { PageWrapper } from 'components/pageWrapper/pageWrapper';
 import { AddTopic } from 'components/addTopic/addTopic';
+import type { GetServerSideProps } from 'next';
 
 export default function Home({ topics }: { topics: Topic[] }) {
   return (
@@ -16,9 +17,7 @@ export default function Home({ topics }: { topics: Topic[] }) {
   );
 }
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const session = await getServerSession(context.req, context.res, authOptions);
 
   if (!session?.user?.email) {
