@@ -1,7 +1,6 @@
 import { prisma } from '@client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../web/pages/api/auth/[...nextauth]';
-
 import type { Topic } from '@prisma/client';
 import { AllTopics } from '../components/allTopics/allTopics';
 import { PageWrapper } from 'components/pageWrapper/pageWrapper';

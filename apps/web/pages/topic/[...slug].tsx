@@ -3,13 +3,21 @@ import { prisma } from '@client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { QuestionForm } from 'components/question/questionForm';
-const Topic = ({ topic }) => {
+import Questions from 'components/question/questions';
+
+type Topic = {
+  id: number;
+  title: string;
+  createdAt: Date;
+};
+
+const Topic = ({ topic }: { topic: Topic }) => {
   console.log(topic);
   return (
     <div>
       <QuestionForm />
 
-      <p>TOpic: {topic.title}</p>
+      <Questions questions={[]} />
     </div>
   );
 };
@@ -27,6 +35,11 @@ export const getServerSideProps: GetServerSideProps = async context => {
     };
   }
   const topic = await prisma.topic.findFirst({
+    select: {
+      id: true,
+      title: true,
+      createdAt: true,
+    },
     where: {
       user: {
         email: session?.user?.email,
@@ -34,6 +47,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
       slug,
     },
   });
+  console.log(`🚀 ~ topic:`, topic);
 
   return {
     props: {

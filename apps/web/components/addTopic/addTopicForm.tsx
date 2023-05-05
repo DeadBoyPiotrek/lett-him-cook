@@ -6,8 +6,14 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 export const AddTopicForm = () => {
+  const router = useRouter();
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
+
   const {
     handleSubmit,
     register,
@@ -16,8 +22,7 @@ export const AddTopicForm = () => {
   } = useForm();
 
   const onSubmit = handleSubmit(async data => {
-    // call api to create topic
-    fetch('/api/addTopic', {
+    await fetch('/api/topic/addTopic', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -25,7 +30,8 @@ export const AddTopicForm = () => {
       body: JSON.stringify(data),
     });
 
-    // reset();
+    reset();
+    refreshData();
   });
 
   return (
@@ -42,11 +48,7 @@ export const AddTopicForm = () => {
           })}
         />
         <FormErrorMessage>
-          {/* XDDDDDDDDDDDDDDDDDDDDD i love typescript ❤️❤️❤️❤️*/}
-          {/* TODO - fix this error message */}
-          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-          {/* @ts-ignore */}
-          {errors.name && errors.name.message}
+          {errors.name && errors.name.message?.toString()}
         </FormErrorMessage>
       </FormControl>
       <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">

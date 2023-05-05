@@ -6,20 +6,26 @@ import { titleToSlug } from 'utils/strings/titleToSlug';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);
+
+  const { name } = req.body;
+
   if (!session) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
-  console.log('session', session);
-  console.log('req.body', req.body);
-  const { name } = req.body;
-  console.log(`🚀 ~ handler ~ name:`, name);
+
+  const user = session.user;
+
+  if (!user || typeof user.email !== 'string') {
+    return res.status(400).json({ message: 'Invalid session data' });
+  }
+
   const topic = await prisma.topic.create({
     data: {
       title: name,
       slug: titleToSlug(name),
       user: {
         connect: {
-          email: session?.user?.email,
+          email: user.email,
         },
       },
     },

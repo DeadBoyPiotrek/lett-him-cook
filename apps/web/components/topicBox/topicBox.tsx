@@ -2,11 +2,10 @@ import { Link } from '@chakra-ui/next-js';
 import { Box, Button, Heading } from '@chakra-ui/react';
 import type { Topic } from '@prisma/client';
 import { dateToLongFormat } from 'utils/date/dateToLongFormat';
-import { titleToSlug } from 'utils/strings/titleToSlug';
+import { useRouter } from 'next/router';
 
 const deleteTopic = async (id: number) => {
-  console.log('delete topic with id', id);
-  await fetch('/api/deleteTopic', {
+  await fetch('/api/topic/deleteTopic', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -16,6 +15,10 @@ const deleteTopic = async (id: number) => {
 };
 
 export const TopicBox = ({ topic }: { topic: Topic }) => {
+  const router = useRouter();
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
   return (
     <Box bg="red.400" borderRadius="10px" border="1px solid black" p={5}>
       <Link _hover={{ textDecoration: 'none' }} href={`/topic/${topic.slug}`}>
@@ -23,8 +26,9 @@ export const TopicBox = ({ topic }: { topic: Topic }) => {
         <Heading>{topic.title}</Heading>
       </Link>
       <Button
-        onClick={() => {
-          deleteTopic(topic.id);
+        onClick={async () => {
+          await deleteTopic(topic.id);
+          refreshData();
         }}
       >
         💀
