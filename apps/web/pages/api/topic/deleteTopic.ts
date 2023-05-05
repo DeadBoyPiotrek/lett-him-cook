@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
-import { authOptions } from './auth/[...nextauth]';
+import { authOptions } from '../auth/[...nextauth]';
 import { Prisma } from '@prisma/client';
-import { prisma } from '../../server/db/client';
+import { prisma } from '../../../server/db/client';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log('hello');

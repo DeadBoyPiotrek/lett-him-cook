@@ -1,14 +1,14 @@
-import { Box } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 export const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Box
+    <Flex
       display="flex"
-      alignContent={'center'}
+      alignItems={'center'}
       flexDirection="column"
       height="calc(100vh - 80px)"
     >
       {children}
-    </Box>
+    </Flex>
   );
 };

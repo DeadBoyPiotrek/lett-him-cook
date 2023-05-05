@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
-export const AddTopicForm = () => {
+export const TopicForm = () => {
   const router = useRouter();
   const refreshData = () => {
     router.replace(router.asPath);
@@ -35,9 +35,15 @@ export const AddTopicForm = () => {
   });
 
   return (
-    <form onSubmit={onSubmit}>
-      <FormControl isInvalid={!!errors.name}>
-        <FormLabel htmlFor="name">Topic Title</FormLabel>
+    <form style={{ width: '30%', display: 'flex' }} onSubmit={onSubmit}>
+      <FormControl
+        display={'flex'}
+        alignItems={'center'}
+        isInvalid={!!errors.name}
+      >
+        <FormLabel htmlFor="name" m={'0'} p={'5'} fontSize={'xl'}>
+          Topic Title
+        </FormLabel>
         <Input
           w={'min'}
           id="name"
@@ -47,7 +53,7 @@ export const AddTopicForm = () => {
             minLength: { value: 4, message: 'Minimum length should be 4' },
           })}
         />
-        <FormErrorMessage>
+        <FormErrorMessage position={'absolute'} left={'36'} top={'14'}>
           {errors.name && errors.name.message?.toString()}
         </FormErrorMessage>
       </FormControl>
