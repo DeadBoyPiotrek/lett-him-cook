@@ -5,6 +5,7 @@ import {
   FormControl,
   Input,
   Button,
+  Box,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
@@ -35,31 +36,36 @@ export const TopicForm = () => {
   });
 
   return (
-    <form style={{ width: '30%', display: 'flex' }} onSubmit={onSubmit}>
-      <FormControl
-        display={'flex'}
-        alignItems={'center'}
-        isInvalid={!!errors.name}
+    <Box w={'auto'}>
+      <form
+        style={{ alignItems: 'center', display: 'flex' }}
+        onSubmit={onSubmit}
       >
-        <FormLabel htmlFor="name" m={'0'} p={'5'} fontSize={'xl'}>
-          Topic Title
-        </FormLabel>
-        <Input
-          w={'min'}
-          id="name"
-          placeholder="name"
-          {...register('name', {
-            required: 'This is required',
-            minLength: { value: 4, message: 'Minimum length should be 4' },
-          })}
-        />
-        <FormErrorMessage position={'absolute'} left={'36'} top={'14'}>
-          {errors.name && errors.name.message?.toString()}
-        </FormErrorMessage>
-      </FormControl>
-      <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
-        Submit
-      </Button>
-    </form>
+        <FormControl
+          display={'flex'}
+          alignItems={'center'}
+          isInvalid={!!errors.name}
+        >
+          <FormLabel htmlFor="name" m={'0'} p={'5'} fontSize={'xl'}>
+            Topic Title
+          </FormLabel>
+          <Input
+            w={'min'}
+            id="name"
+            placeholder="name"
+            {...register('name', {
+              required: 'This is required',
+              minLength: { value: 4, message: 'Minimum length should be 4' },
+            })}
+          />
+          <FormErrorMessage position={'absolute'} left={'36'} top={'14'}>
+            {errors.name && errors.name.message?.toString()}
+          </FormErrorMessage>
+        </FormControl>
+        <Button colorScheme="teal" isLoading={isSubmitting} type="submit">
+          Submit
+        </Button>
+      </form>
+    </Box>
   );
 };

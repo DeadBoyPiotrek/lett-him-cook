@@ -5,7 +5,6 @@ import { Prisma } from '@prisma/client';
 import { prisma } from '../../../server/db/client';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log('hello');
   try {
     const session = await getServerSession(req, res, authOptions);
     if (!session) {
