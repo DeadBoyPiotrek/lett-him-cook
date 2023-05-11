@@ -5,7 +5,6 @@ import { dateToLongFormat } from 'utils/date/dateToLongFormat';
 import { useRouter } from 'next/router';
 
 const deleteTopic = async (id: number) => {
-  console.log(id);
   await fetch('/api/topic/deleteTopic', {
     method: 'POST',
     headers: {

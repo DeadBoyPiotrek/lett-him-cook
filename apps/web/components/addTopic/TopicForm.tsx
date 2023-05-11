@@ -8,7 +8,7 @@ import {
   Box,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-
+import styles from './topicForm.module.css';
 export const TopicForm = () => {
   const router = useRouter();
   const refreshData = () => {
@@ -37,14 +37,14 @@ export const TopicForm = () => {
 
   return (
     <Box w={'auto'}>
-      <form
-        style={{ alignItems: 'center', display: 'flex' }}
-        onSubmit={onSubmit}
-      >
+      <form className={styles.form} onSubmit={onSubmit}>
         <FormControl
           display={'flex'}
           alignItems={'center'}
           isInvalid={!!errors.name}
+          flexDirection={{ base: 'column', md: 'row' }}
+          // bgColor={'white'}
+          mb={{ base: '5', md: '0' }}
         >
           <FormLabel htmlFor="name" m={'0'} p={'5'} fontSize={'xl'}>
             Topic Title

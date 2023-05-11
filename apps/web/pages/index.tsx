@@ -6,7 +6,7 @@ import { AllTopics } from '../components/allTopics/allTopics';
 import { PageWrapper } from 'components/pageWrapper/pageWrapper';
 
 import type { GetServerSideProps } from 'next';
-import { TopicForm } from 'components/addTopic/TopicForm';
+import { TopicForm } from 'components/addTopic/topicForm';
 
 export default function Home({ topics }: { topics: Topic[] }) {
   return (

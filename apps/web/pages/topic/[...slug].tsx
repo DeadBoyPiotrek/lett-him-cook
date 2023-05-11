@@ -3,7 +3,7 @@ import { prisma } from '@client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { QuestionForm } from 'components/question/questionForm';
-import Questions from 'components/question/questions';
+import { QuestionsAnswers } from 'components/questionAnswer/questionsAnswers';
 import { PageWrapper } from 'components/pageWrapper/pageWrapper';
 import { Heading } from '@chakra-ui/react';
 
@@ -15,16 +15,20 @@ type Topic = {
     id: number;
     text: string;
     createdAt: Date;
+    answer: {
+      id: number;
+      text: string;
+      createdAt: Date;
+    };
   }[];
 };
 
 const Topic = ({ topic }: { topic: Topic }) => {
-  console.log(topic);
   return (
     <PageWrapper>
       <Heading m={10}>{topic.title}</Heading>
       <QuestionForm id={topic.id} />
-      <Questions questions={topic.questions} />
+      <QuestionsAnswers questions={topic.questions} />
     </PageWrapper>
   );
 };
@@ -51,6 +55,13 @@ export const getServerSideProps: GetServerSideProps = async context => {
           id: true,
           text: true,
           createdAt: true,
+          answer: {
+            select: {
+              id: true,
+              text: true,
+              createdAt: true,
+            },
+          },
         },
       },
     },
