@@ -7,6 +7,8 @@ import { PageWrapper } from 'components/pageWrapper/pageWrapper';
 
 import type { GetServerSideProps } from 'next';
 import { TopicForm } from 'components/addTopic/topicForm';
+import { getAllTopics } from './api/topic/getAllTopics';
+import { useQuery } from '@chakra-ui/react';
 
 export default function Home({ topics }: { topics: Topic[] }) {
   return (
@@ -18,27 +20,10 @@ export default function Home({ topics }: { topics: Topic[] }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const session = await getServerSession(context.req, context.res, authOptions);
-
-  if (!session?.user?.email) {
-    return {
-      props: {
-        topics: [],
-      },
-    };
-  }
-
-  const topics = await prisma.topic.findMany({
-    where: {
-      user: {
-        email: session?.user?.email,
-      },
-    },
-  });
-
+  const topics = await getAllTopics(context);
   return {
     props: {
-      topics: JSON.parse(JSON.stringify(topics)),
+      topics,
     },
   };
 };

@@ -7,6 +7,7 @@ import {
   Button,
   Box,
 } from '@chakra-ui/react';
+import styles from '../addTopic/topicForm.module.css';
 export const QuestionForm = ({ id }: { id: number }) => {
   const {
     handleSubmit,
@@ -31,14 +32,13 @@ export const QuestionForm = ({ id }: { id: number }) => {
 
   return (
     <Box w={'auto'}>
-      <form
-        style={{ display: 'flex', alignItems: 'center' }}
-        onSubmit={onSubmit}
-      >
+      <form className={styles.form} onSubmit={onSubmit}>
         <FormControl
           display={'flex'}
           alignItems={'center'}
           isInvalid={!!errors.question}
+          flexDirection={{ base: 'column', md: 'row' }}
+          mb={{ base: '5', md: '0' }}
         >
           <FormLabel m={'0'} p={'5'} htmlFor="question">
             Ask Question

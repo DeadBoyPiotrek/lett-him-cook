@@ -43,7 +43,6 @@ export const TopicForm = () => {
           alignItems={'center'}
           isInvalid={!!errors.name}
           flexDirection={{ base: 'column', md: 'row' }}
-          // bgColor={'white'}
           mb={{ base: '5', md: '0' }}
         >
           <FormLabel htmlFor="name" m={'0'} p={'5'} fontSize={'xl'}>
@@ -55,6 +54,10 @@ export const TopicForm = () => {
             placeholder="name"
             {...register('name', {
               required: 'This is required',
+              pattern: {
+                value: /^[a-zA-Z0-9 ]*$/,
+                message: 'Only letters and numbers are allowed',
+              },
               minLength: { value: 4, message: 'Minimum length should be 4' },
             })}
           />

@@ -20,7 +20,7 @@ export const TopicBox = ({ topic }: { topic: Topic }) => {
     router.replace(router.asPath);
   };
   return (
-    <Box bg="red.400" borderRadius="10px" border="1px solid black" p={5}>
+    <Box bg="red.400" borderRadius="10px" p={5}>
       <Link _hover={{ textDecoration: 'none' }} href={`/topic/${topic.slug}`}>
         <p>{dateToLongFormat(topic.createdAt)}</p>
         <Heading>{topic.title}</Heading>
