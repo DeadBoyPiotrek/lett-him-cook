@@ -7,13 +7,12 @@ import {
   Button,
   Box,
 } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+
 import styles from './topicForm.module.css';
+import { useQueryClient } from '@tanstack/react-query';
+
 export const TopicForm = () => {
-  const router = useRouter();
-  const refreshData = () => {
-    router.replace(router.asPath);
-  };
+  const queryClient = useQueryClient();
 
   const {
     handleSubmit,
@@ -32,7 +31,7 @@ export const TopicForm = () => {
     });
 
     reset();
-    refreshData();
+    queryClient.invalidateQueries();
   });
 
   return (

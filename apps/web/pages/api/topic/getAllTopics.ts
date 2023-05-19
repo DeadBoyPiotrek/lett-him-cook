@@ -1,10 +1,13 @@
 import { prisma } from '@client';
-import type { GetServerSidePropsContext } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 
-export const getAllTopics = async (context: GetServerSidePropsContext) => {
-  const session = await getServerSession(context.req, context.res, authOptions);
+export const getAllTopics = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  const session = await getServerSession(req, res, authOptions);
 
   if (!session?.user?.email) return [];
 
@@ -16,4 +19,9 @@ export const getAllTopics = async (context: GetServerSidePropsContext) => {
     },
   });
   return JSON.parse(JSON.stringify(topics));
+};
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const topics2 = await getAllTopics(req, res);
+  return res.status(200).json(topics2);
 };

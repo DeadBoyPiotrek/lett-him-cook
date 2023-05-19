@@ -10,7 +10,8 @@
         "GITHUB_SECRET",
         "NODE_ENV",
         "GOOGLE_ID",
-        "GOOGLE_SECRET"
+        "GOOGLE_SECRET",
+        "OPENAI_API_KEY"
       ]
     },
     "lint": {},
