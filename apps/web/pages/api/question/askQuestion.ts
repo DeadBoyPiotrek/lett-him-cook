@@ -10,15 +10,15 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  // if (!configuration.apiKey) {
-  //   res.status(500).json({
-  //     error: {
-  //       message:
-  //         'OpenAI API key not configured, please follow instructions in README.md',
-  //     },
-  //   });
-  //   return;
-  // }
+  if (!configuration.apiKey) {
+    res.status(500).json({
+      error: {
+        message:
+          'OpenAI API key not configured, please follow instructions in README.md',
+      },
+    });
+    return;
+  }
 
   const { question: text, topicId } = req.body;
 
@@ -44,31 +44,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    // const completion = await openai.createCompletion({
-    //   model: 'text-davinci-003',
-    //   prompt: text,
-    //   temperature: 0.6,
-    // });
+    const completion = await openai.createCompletion({
+      model: 'text-davinci-003',
+      prompt: text,
+      temperature: 0.6,
+    });
 
-    // const answer = completion.data.choices[0].text;
-    const answer = `Listening to concentration music can provide an effective way for those with ADHD to relax and concentrate on tasks such as studying, work or hobbies. 
-
-    ~ My other channels: 
-    Sub Bass Meditation Music ► https://goo.gl/Q3dSdU
-    Meditation Cloud ► https://goo.gl/oGVo9F
-    Sleepuma ►    
-    
-     / @sleepumasleeping...  
-    
-    - FACEBOOK
-    https://goo.gl/FfNFoa
-    - Twitter
-    https://goo.gl/BmEf8o
-    - Our website
-    https://goo.gl/SWuQNw
-    
-    #studymusic#focusmusic #musicforstudying;
-    `;
+    const answer = completion.data.choices[0].text;
 
     const question = await prisma.question.create({
       data: {
