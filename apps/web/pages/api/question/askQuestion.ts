@@ -48,9 +48,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       model: 'text-davinci-003',
       prompt: text,
       temperature: 0.6,
+      max_tokens: 2048,
     });
 
-    const answer = completion.data.choices[0].text;
+    const answer = completion.data.choices[0].text?.trim();
+    console.log(`🚀 ~ handler ~ answer:`, answer);
 
     const question = await prisma.question.create({
       data: {
@@ -69,9 +71,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     return res.status(200).json(question);
-
-    // TODO: error type
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error.response) {
       console.error(error.response.status, error.response.data);
