@@ -44,27 +44,35 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    // const completion = await openai.createCompletion({
-    //   model: 'text-davinci-003, ',
-    //   prompt: text,
-    //   temperature: 0.6,
-    //   max_tokens: 2048,
-    // });
-
     const completion = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [
+        // {
+        //   role: 'user',
+        //   content: text,
+        // },
         {
           role: 'user',
-          content: text,
+          content: 'count with me.. one',
+        },
+        {
+          role: 'assistant',
+          content: 'two',
+        },
+        {
+          role: 'user',
+          content: 'three',
+        },
+        {
+          role: 'assistant',
+          content: 'four',
         },
       ],
       temperature: 0.6,
       max_tokens: 2048,
     });
 
-    const answer = completion.data.choices[0].text;
-    console.log(`🚀 ~ handler ~ answer:`, answer);
+    const answer = completion.data.choices[0].message?.content;
 
     const question = await prisma.question.create({
       data: {
