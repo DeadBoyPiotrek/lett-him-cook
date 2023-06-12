@@ -3,8 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 import { prisma } from '../../../server/db/client';
 import { titleToSlug } from 'utils/strings/titleToSlug';
-
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);
 
   const { name } = req.body;
@@ -33,5 +32,3 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   return res.status(200).json(topic);
 };
-
-export default handler;

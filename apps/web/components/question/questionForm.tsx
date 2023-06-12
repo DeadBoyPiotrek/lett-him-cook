@@ -8,7 +8,9 @@ import {
   Box,
 } from '@chakra-ui/react';
 import styles from '../addTopic/topicForm.module.css';
+import { useQueryClient } from '@tanstack/react-query';
 export const QuestionForm = ({ id }: { id: number }) => {
+  const queryClient = useQueryClient();
   const {
     handleSubmit,
     register,
@@ -26,7 +28,7 @@ export const QuestionForm = ({ id }: { id: number }) => {
       },
       body: JSON.stringify(data),
     });
-
+    queryClient.invalidateQueries();
     reset();
   });
 

@@ -6,19 +6,19 @@ import { authOptions } from '../auth/[...nextauth]';
 export const getSingleTopic = async (
   req: NextApiRequest,
 
-  res: NextApiResponse
+  res: NextApiResponse,
+  slug: string
 ) => {
   const session = await getServerSession(req, res, authOptions);
 
   if (!session?.user?.email) return [];
-
-  const slug = req.body;
 
   const topic = await prisma.topic.findFirst({
     select: {
       id: true,
       title: true,
       createdAt: true,
+      slug: true,
       questions: {
         select: {
           id: true,
@@ -45,7 +45,10 @@ export const getSingleTopic = async (
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const topic2 = await getSingleTopic(req, res);
+  const { slug } = req.body;
+
+  if (!slug) return res.status(400).json({ error: 'No slug provided' });
+  const topic2 = await getSingleTopic(req, res, slug);
 
   return res.status(200).json(topic2);
 };

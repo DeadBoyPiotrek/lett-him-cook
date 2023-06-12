@@ -4,7 +4,7 @@ import { authOptions } from '../auth/[...nextauth]';
 import { Prisma } from '@prisma/client';
 import { prisma } from '../../../server/db/client';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const session = await getServerSession(req, res, authOptions);
     if (!session) {
@@ -28,5 +28,3 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 };
-
-export default handler;

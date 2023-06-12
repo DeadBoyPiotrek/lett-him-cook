@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next';
+import type { GetServerSideProps } from 'next';
 
 import { getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
@@ -7,12 +7,13 @@ import { QuestionsAnswers } from 'components/questionAnswer/questionsAnswers';
 import { PageWrapper } from 'components/pageWrapper/pageWrapper';
 import { Heading } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import getSingleTopic from 'pages/api/topic/getSingleTopic';
+import { getSingleTopic } from 'pages/api/topic/getSingleTopic';
 
 type Topic = {
   id: number;
   title: string;
   createdAt: Date;
+  slug: string;
   questions: {
     id: number;
     text: string;
@@ -27,8 +28,8 @@ type Topic = {
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const session = await getServerSession(context.req, context.res, authOptions);
-  const slug = context.query.slug;
-  console.log(`🚀 ~ slug:`, slug);
+  const { slug } = context.query;
+  const slugString = Array.isArray(slug) ? slug[0] : '';
 
   if (!slug || !session) {
     return {
@@ -39,10 +40,9 @@ export const getServerSideProps: GetServerSideProps = async context => {
     };
   }
 
-  const topic = await getSingleTopic(
-    context.req as NextApiRequest,
-    context.res as NextApiResponse
-  );
+  const topic = await getSingleTopic(context.req, context.res, slugString);
+
+  console.log(`🚀 ~ topic:`, topic);
 
   return {
     props: {
@@ -52,14 +52,14 @@ export const getServerSideProps: GetServerSideProps = async context => {
 };
 const Topic = ({ topic }: { topic: Topic }) => {
   const { data = topic } = useQuery(['topic', topic.id], async () => {
-    const response = await fetch(`/api/topic/getSingleTopic`, {
-      method: 'GET',
+    const response = await fetch('/api/topic/getSingleTopic', {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(topic.id),
+      method: 'POST',
+      body: JSON.stringify({ slug: topic.slug }),
     });
-    console.log(`🚀 ~ response:`, response);
+
     return response.json();
   });
 
