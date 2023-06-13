@@ -14,6 +14,12 @@ export const getSingleTopic = async (
   if (!session?.user?.email) return [];
 
   const topic = await prisma.topic.findFirst({
+    where: {
+      user: {
+        email: session?.user?.email,
+      },
+      slug,
+    },
     select: {
       id: true,
       title: true,
@@ -33,12 +39,6 @@ export const getSingleTopic = async (
           },
         },
       },
-    },
-    where: {
-      user: {
-        email: session?.user?.email,
-      },
-      slug,
     },
   });
   return JSON.parse(JSON.stringify(topic));

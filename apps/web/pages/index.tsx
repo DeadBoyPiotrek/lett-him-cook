@@ -2,13 +2,16 @@ import type { Topic } from '@prisma/client';
 import { AllTopics } from '../components/allTopics/allTopics';
 import { PageWrapper } from 'components/pageWrapper/pageWrapper';
 
-import type { GetServerSideProps } from 'next';
+import type { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next';
 import { TopicForm } from 'components/addTopic/topicForm';
 import { getAllTopics } from './api/topic/getAllTopics';
 import { useQuery } from '@tanstack/react-query';
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const topics = await getAllTopics(context.req, context.res);
+  const topics = await getAllTopics(
+    context.req as NextApiRequest,
+    context.res as NextApiResponse
+  );
   return {
     props: {
       topics,

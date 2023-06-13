@@ -6,9 +6,11 @@ import {
   Input,
   Button,
   Box,
+  Flex,
 } from '@chakra-ui/react';
 import styles from '../addTopic/topicForm.module.css';
 import { useQueryClient } from '@tanstack/react-query';
+
 export const QuestionForm = ({ id }: { id: number }) => {
   const queryClient = useQueryClient();
   const {
@@ -33,32 +35,35 @@ export const QuestionForm = ({ id }: { id: number }) => {
   });
 
   return (
-    <Box w={'auto'}>
+    <Box w={['100%', '100%', '100%', '4xl']} pb={'14'}>
       <form className={styles.form} onSubmit={onSubmit}>
         <FormControl
           display={'flex'}
           alignItems={'center'}
           isInvalid={!!errors.question}
           flexDirection={{ base: 'column', md: 'row' }}
-          mb={{ base: '5', md: '0' }}
         >
-          <FormLabel m={'0'} p={'5'} htmlFor="question">
-            Ask Question
-          </FormLabel>
-          <Input
-            w={'min'}
-            id="question"
-            placeholder="question"
-            {...register('question', {
-              required: 'This is required',
-              minLength: { value: 4, message: 'Minimum length should be 4' },
-            })}
-          />
+          <Flex flex="1">
+            <Input
+              w={'100%'}
+              id="question"
+              placeholder="Ready to learn? Ask me anything!"
+              {...register('question', {
+                required: 'This is required',
+                minLength: { value: 4, message: 'Minimum length should be 4' },
+              })}
+            />
+          </Flex>
           <FormErrorMessage position={'absolute'} left={'36'} top={'14'}>
             {errors.question && errors.question.message?.toString()}
           </FormErrorMessage>
         </FormControl>
-        <Button colorScheme="teal" isLoading={isSubmitting} type="submit">
+        <Button
+          ml={'5'}
+          colorScheme="teal"
+          isLoading={isSubmitting}
+          type="submit"
+        >
           Submit
         </Button>
       </form>

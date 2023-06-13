@@ -11,8 +11,10 @@ type Question = {
   };
 };
 export const QuestionsAnswers = ({ questions }: { questions: Question[] }) => {
+  if (questions.length == 0) return null;
+
   return (
-    <Flex p={20} flexDirection={'column'} gap={5} flexWrap={'wrap'}>
+    <Flex p={10} flexDirection={'column'} gap={5} flexWrap={'wrap'}>
       {questions.map(question => (
         <QuestionAnswerBox key={question.id} question={question} />
       ))}

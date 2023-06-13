@@ -1,4 +1,4 @@
-import { Box, Button } from '@chakra-ui/react';
+import { Box, Button, Flex, space } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 type Question = {
   id: number;
@@ -19,10 +19,10 @@ export const QuestionBox = ({ question }: { question: Question }) => {
     queryClient.invalidateQueries();
   };
   return (
-    <Box textAlign={'center'}>
+    <Flex justifyContent={'space-between'}>
       {question.text}
 
-      <Button onClick={() => deleteQuestion(question.id)}>Delete 💀</Button>
-    </Box>
+      <Button onClick={() => deleteQuestion(question.id)}>Delete</Button>
+    </Flex>
   );
 };

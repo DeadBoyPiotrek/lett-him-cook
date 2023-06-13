@@ -4,6 +4,7 @@ import { authOptions } from '../auth/[...nextauth]';
 import { prisma } from '../../../server/db/client';
 
 import { Configuration, OpenAIApi } from 'openai';
+
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -43,30 +44,43 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ message: 'Invalid session data' });
   }
 
+  const topicData = await prisma.topic.findFirst({
+    where: {
+      id: topicId,
+    },
+    select: {
+      title: true,
+      questions: {
+        select: { text: true, answer: { select: { text: true } } },
+      },
+    },
+  });
+  console.log(`🚀 ~ handler ~ topicData:`, topicData);
+
+  type Role = 'user' | 'assistant';
+
+  const conversation =
+    topicData?.questions
+      .map((question): { role: Role; content: string }[] => {
+        const assistantContent = question.answer?.text || '';
+
+        return [
+          { role: 'user', content: question.text },
+          { role: 'assistant', content: assistantContent },
+        ];
+      })
+      .flat() ?? [];
+  // wait for 5 seconds here
+
+  const assistantPersonality = `You are a coach who helps me with ${topicData?.title}`;
+
   try {
     const completion = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [
-        // {
-        //   role: 'user',
-        //   content: text,
-        // },
-        {
-          role: 'user',
-          content: 'count with me.. one',
-        },
-        {
-          role: 'assistant',
-          content: 'two',
-        },
-        {
-          role: 'user',
-          content: 'three',
-        },
-        {
-          role: 'assistant',
-          content: 'four',
-        },
+        { role: 'assistant', content: assistantPersonality },
+        ...conversation,
+        { role: 'user', content: text },
       ],
       temperature: 0.6,
       max_tokens: 2048,

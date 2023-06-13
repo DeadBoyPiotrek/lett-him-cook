@@ -23,9 +23,6 @@ export const getAllTopics = async (
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const url = req.url;
-  console.log(`🚀 ~ url:`, url);
-
   const topics2 = await getAllTopics(req, res);
 
   return res.status(200).json(topics2);

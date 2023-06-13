@@ -4,7 +4,6 @@ import { authOptions } from '../auth/[...nextauth]';
 import { prisma } from '../../../server/db/client';
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const id = req.body.id;
-  console.log(id);
   const session = await getServerSession(req, res, authOptions);
   if (!session) {
     return res.status(401).json({ message: 'Unauthorized' });

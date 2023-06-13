@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from 'next';
+import type { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next';
 
 import { getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
@@ -40,9 +40,11 @@ export const getServerSideProps: GetServerSideProps = async context => {
     };
   }
 
-  const topic = await getSingleTopic(context.req, context.res, slugString);
-
-  console.log(`🚀 ~ topic:`, topic);
+  const topic = await getSingleTopic(
+    context.req as NextApiRequest,
+    context.res as NextApiResponse,
+    slugString
+  );
 
   return {
     props: {
@@ -65,9 +67,11 @@ const Topic = ({ topic }: { topic: Topic }) => {
 
   return (
     <PageWrapper>
-      <Heading m={10}>{data.title}</Heading>
-      <QuestionForm id={data.id} />
+      <Heading m={10} color={'#ff0054'}>
+        {data.title}
+      </Heading>
       <QuestionsAnswers questions={data.questions} />
+      <QuestionForm id={data.id} />
     </PageWrapper>
   );
 };
