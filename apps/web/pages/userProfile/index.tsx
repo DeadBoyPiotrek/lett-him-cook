@@ -2,20 +2,33 @@ import type { GetServerSidePropsContext } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../pages/api/auth/[...nextauth]';
+import { Button } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+
 export default function Profile() {
+  const router = useRouter();
   const { data: session } = useSession();
   if (session) {
     return (
       <>
-        Signed in as {session?.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
+        Signed in as <br /> {session?.user?.email} <br /> <br />
+        <Button onClick={() => signOut()}>Sign out</Button> <br />
+        <Button
+          onClick={async () => {
+            await fetch('api/account/deleteAccount');
+
+            router.push('/');
+          }}
+        >
+          DeleteAccount
+        </Button>
       </>
     );
   }
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <Button onClick={() => signIn()}>Sign in</Button>
     </>
   );
 }

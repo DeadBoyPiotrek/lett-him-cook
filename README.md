@@ -5,21 +5,20 @@
 ## Authentication/User Profile
 
 - Authenticate users and store their data in database ✅
-- Users can delete account 🔜
-- Users can delete all their data
+- Users can delete account ✅
+- Users can delete all their data ✅
 - Users can change language
-- Users can use voice-to-text (default browser behavior)
-
+- Users can use voice-to-text
 
 ## Mistakes and How to Improve
 
 - Identify common mistakes
 - Develop a plan to address and correct mistakes
 
-## Technologies 
+## Technologies
 
- - NextAuth 
- - OpenAI API 
- - Next.js
- - Supabase 
- - ChakraUI 
+- NextAuth
+- OpenAI API
+- Next.js
+- Supabase
+- ChakraUI
