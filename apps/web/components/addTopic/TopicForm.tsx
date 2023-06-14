@@ -7,11 +7,16 @@ import {
   Button,
   Box,
 } from '@chakra-ui/react';
-
+import { en } from 'locales/en';
+import { pl } from 'locales/pl';
+import { useRouter } from 'next/router';
 import styles from './topicForm.module.css';
 import { useQueryClient } from '@tanstack/react-query';
 
 export const TopicForm = () => {
+  const router = useRouter();
+  const { locale } = router;
+  const translation = locale === 'en' ? en : pl;
   const queryClient = useQueryClient();
 
   const {
@@ -44,13 +49,10 @@ export const TopicForm = () => {
           flexDirection={{ base: 'column', md: 'row' }}
           mb={{ base: '5', md: '0' }}
         >
-          <FormLabel htmlFor="name" m={'0'} p={'5'} fontSize={'xl'}>
-            Topic Title
-          </FormLabel>
           <Input
             w={'min'}
             id="name"
-            placeholder="name"
+            placeholder={translation.submitTopicPlaceholder}
             {...register('name', {
               required: 'This is required',
               pattern: {
@@ -65,7 +67,7 @@ export const TopicForm = () => {
           </FormErrorMessage>
         </FormControl>
         <Button colorScheme="teal" isLoading={isSubmitting} type="submit">
-          Submit
+          {translation.submit}
         </Button>
       </form>
     </Box>

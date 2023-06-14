@@ -10,8 +10,15 @@ import {
 } from '@chakra-ui/react';
 import styles from '../addTopic/topicForm.module.css';
 import { useQueryClient } from '@tanstack/react-query';
+import { en } from 'locales/en';
+import { pl } from 'locales/pl';
+import { useRouter } from 'next/router';
 
 export const QuestionForm = ({ id }: { id: number }) => {
+  const router = useRouter();
+  const { locale } = router;
+  const translation = locale === 'en' ? en : pl;
+
   const queryClient = useQueryClient();
   const {
     handleSubmit,
@@ -47,7 +54,7 @@ export const QuestionForm = ({ id }: { id: number }) => {
             <Input
               w={'100%'}
               id="question"
-              placeholder="Ready to learn? Ask me anything!"
+              placeholder={translation.askQuestionPlaceholder}
               {...register('question', {
                 required: 'This is required',
                 minLength: { value: 4, message: 'Minimum length should be 4' },
@@ -64,7 +71,7 @@ export const QuestionForm = ({ id }: { id: number }) => {
           isLoading={isSubmitting}
           type="submit"
         >
-          Submit
+          {translation.submit}
         </Button>
       </form>
     </Box>

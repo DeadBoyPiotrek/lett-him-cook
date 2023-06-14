@@ -22,7 +22,7 @@ export const QuestionBox = ({ question }: { question: Question }) => {
     <Flex justifyContent={'space-between'}>
       {question.text}
 
-      <Button onClick={() => deleteQuestion(question.id)}>Delete</Button>
+      <Button onClick={() => deleteQuestion(question.id)}>❌</Button>
     </Flex>
   );
 };
