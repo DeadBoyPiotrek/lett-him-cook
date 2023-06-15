@@ -4,6 +4,9 @@
 - Users can delete account ✅
 - Users can delete all their data ✅
 - Users can change language ✅
+- Feed model More data 
+- Daily analysis report
+- Assistant like features
 
 ## Technologies
 
